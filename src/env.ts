@@ -1,4 +1,4 @@
-const url = process.env.DSE_BASE_URL;
+const url = process.env.DSE_BASE_URL || 'https://dsebd.org';
 
 export const DHAKA_STOCK_URLS = {
   LATEST_DATA: `${url}/latest_share_price_scroll_l.php`,

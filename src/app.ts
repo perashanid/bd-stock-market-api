@@ -24,7 +24,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.status(200).json({
     status: 'OK',
     timestamp: new Date().toISOString(),
@@ -37,7 +37,7 @@ app.get('/health', (req, res) => {
 app.use(express.static('public'));
 
 // API documentation endpoint (JSON format for API clients)
-app.get('/api-info', (req, res) => {
+app.get('/api-info', (_req, res) => {
   res.json({
     name: 'Bangladesh Stock Market API',
     version: '1.0.0',
@@ -65,7 +65,7 @@ const expressApp = createExpressServer({
 app.use(expressApp);
 
 // 404 handler
-app.use('*', (req, res) => {
+app.use('*', (_req, res) => {
   res.status(404).json({
     success: false,
     message: 'Endpoint not found',

@@ -73,7 +73,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-# .env
+.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -128,3 +128,49 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Deployment and build artifacts
+dist/
+build/
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+
+# Package manager lock files (keep package-lock.json but ignore others)
+yarn.lock
+pnpm-lock.yaml
+
+# Local development files
+.env.local
+.env.development
+.env.test
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Misc
+*.orig
+.eslintcache
+.stylelintcache
