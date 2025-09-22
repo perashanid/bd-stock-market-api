@@ -10,13 +10,7 @@
     "start-server": "node --max-old-space-size=4096 --enable-source-maps dist/src/app.js",
     "dev": "tsc-watch --noClear --onSuccess 'npm run start-server'",
     "test": "node test-api.js",
-    "test:api": "node test-api.js",
-    "docker:build": "docker build -t bd-stock-api .",
-    "docker:run": "docker run -p 3000:3000 bd-stock-api",
-    "docker:compose": "docker-compose up -d",
-    "docker:logs": "docker-compose logs -f",
-    "docker:stop": "docker-compose down",
-    "prod:build": "npm run build && npm run start"
+    "test:api": "node test-api.js"
   },
   "keywords": [],
   "author": "",
