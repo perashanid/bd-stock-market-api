@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangladesh Stock Market API</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .endpoint {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .endpoint h3 {
+            color: #495057;
+            margin-top: 0;
+        }
+        .url {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        .test-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-btn:hover {
+            background: #0056b3;
+        }
+        .response {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+        .loading {
+            color: #6c757d;
+            font-style: italic;
+        }
+        .error {
+            color: #dc3545;
+        }
+        .success {
+            color: #28a745;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇧🇩 Bangladesh Stock Market API</h1>
+        
+        <div class="info">
+            <strong>📊 About:</strong> This API provides real-time and historical data from the Dhaka Stock Exchange (DSE).
+            <br><strong>🔗 Data Source:</strong> dsebd.org
+            <br><strong>📝 Note:</strong> This is an unofficial API for educational and development purposes.
+        </div>
+
+        <div class="endpoint">
+            <h3>🏥 Health Check</h3>
+            <p>Check if the API is running and healthy</p>
+            <div class="url" id="health-url">/health</div>
+            <button class="test-btn" onclick="testEndpoint('health', '/health')">Test Health Check</button>
+            <div id="health-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>📈 Latest Stock Data</h3>
+            <p>Get the latest stock market data from DSE</p>
+            <div class="url" id="latest-url">/v1/dse/latest</div>
+            <button class="test-btn" onclick="testEndpoint('latest', '/v1/dse/latest')">Get Latest Data</button>
+            <div id="latest-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>🏆 Top 30 Stocks</h3>
+            <p>Get the top 30 performing stocks</p>
+            <div class="url" id="top30-url">/v1/dse/top30</div>
+            <button class="test-btn" onclick="testEndpoint('top30', '/v1/dse/top30')">Get Top 30</button>
+            <div id="top30-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>📊 DSEX Data</h3>
+            <p>Get DSEX index data, optionally filtered by symbol</p>
+            <div class="url" id="dsex-url">/v1/dse/dsexdata</div>
+            <button class="test-btn" onclick="testEndpoint('dsex', '/v1/dse/dsexdata')">Get All DSEX Data</button>
+            <button class="test-btn" onclick="testEndpoint('dsex-beximco', '/v1/dse/dsexdata?symbol=BEXIMCO')">Get BEXIMCO Data</button>
+            <div id="dsex-response" class="response" style="display: none;"></div>
+            <div id="dsex-beximco-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>📅 Historical Data</h3>
+            <p>Get historical stock data for a date range</p>
+            <div class="url" id="historical-url">/v1/dse/historical?start=2024-01-01&end=2024-01-07</div>
+            <button class="test-btn" onclick="testEndpoint('historical', '/v1/dse/historical?start=2024-01-01&end=2024-01-07')">Get Historical Data</button>
+            <div id="historical-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="endpoint">
+            <h3>ℹ️ API Status</h3>
+            <p>Get API status and available endpoints</p>
+            <div class="url" id="status-url">/v1/dse/status</div>
+            <button class="test-btn" onclick="testEndpoint('status', '/v1/dse/status')">Get API Status</button>
+            <div id="status-response" class="response" style="display: none;"></div>
+        </div>
+
+        <div class="info">
+            <strong>🔗 API Base URL:</strong> <span id="base-url">Loading...</span>
+            <br><strong>📖 Usage:</strong> All endpoints return JSON data. Use these URLs in your applications.
+            <br><strong>⚡ Rate Limits:</strong> Please use responsibly. No authentication required.
+        </div>
+    </div>
+
+    <script>
+        // Get the current base URL
+        const baseUrl = window.location.origin;
+        document.getElementById('base-url').textContent = baseUrl;
+        
+        // Update all URL displays
+        document.querySelectorAll('.url').forEach(el => {
+            const endpoint = el.textContent;
+            el.textContent = baseUrl + endpoint;
+        });
+
+        async function testEndpoint(id, endpoint) {
+            const responseDiv = document.getElementById(id + '-response');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<span class="loading">Loading...</span>';
+            
+            try {
+                const response = await fetch(baseUrl + endpoint);
+                const data = await response.json();
+                
+                let formattedResponse = `Status: ${response.status} ${response.statusText}\n\n`;
+                formattedResponse += JSON.stringify(data, null, 2);
+                
+                responseDiv.innerHTML = `<span class="success">✅ Success</span>\n${formattedResponse}`;
+            } catch (error) {
+                responseDiv.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+
+        // Test health check on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => testEndpoint('health', '/health'), 1000);
+        });
+    </script>
+</body>
+</html>

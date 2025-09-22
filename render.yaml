@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: bd-stock-api
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DSE_BASE_URL
+        value: https://dsebd.org
+      - key: ALLOWED_ORIGINS
+        value: "*"
+    healthCheckPath: /health
