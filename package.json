@@ -8,9 +8,7 @@
     "build:watch": "tsc --watch",
     "start": "node --max-old-space-size=4096 --enable-source-maps dist/src/app.js",
     "start-server": "node --max-old-space-size=4096 --enable-source-maps dist/src/app.js",
-    "dev": "tsc-watch --noClear --onSuccess 'npm run start-server'",
-    "test": "node test-api.js",
-    "test:api": "node test-api.js"
+    "dev": "tsc-watch --noClear --onSuccess 'npm run start-server'"
   },
   "keywords": [],
   "author": "",
