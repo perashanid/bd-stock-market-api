@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2021",
+    "lib": ["es2021"],
     "module": "commonjs",
     "moduleResolution": "node",
     "strict": true,
@@ -10,6 +11,7 @@
     "outDir": "./dist/src",
     "baseUrl": "./src",
     "typeRoots": ["./node_modules/@types"],
+    "types": ["node"],
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
     },
