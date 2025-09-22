@@ -2,16 +2,17 @@
   "compilerOptions": {
     "target": "es2021",
     "module": "commonjs",
+    "moduleResolution": "node",
     "strict": true,
     "allowJs": true,
     "esModuleInterop": true,
     "noImplicitAny": false,
     "outDir": "./dist/src",
     "baseUrl": "./src",
+    "typeRoots": ["./node_modules/@types"],
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
     },
-    "types": ["node"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true
